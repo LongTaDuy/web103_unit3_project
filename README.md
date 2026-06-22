@@ -4,7 +4,7 @@ Submitted by: **Long Ta**
 
 About this web app: **UnityGrid Plaza is a virtual community space where users can explore events by location. Users can click on different locations in an interactive visual map to view events associated with that location. The app also includes an Events page where users can view all events and filter them by location.**
 
-Time spent: **TODO: X** hours
+Time spent: **7** hours
 
 ## Required Features
 
@@ -29,7 +29,7 @@ The following **optional** features are implemented:
   * [x] Users can sort *or* filter events by location.
 * [ ] Events display a countdown showing the time remaining before that event
 
-  * [x] Events appear with different formatting when the event has passed (ex. negative time, indication the event has passed, crossed out, etc.).
+  * [ ] Events appear with different formatting when the event has passed (ex. negative time, indication the event has passed, crossed out, etc.).
 
 The following **additional** features are implemented:
 
@@ -49,17 +49,6 @@ GIF created with **ScreenToGif**
 ## Notes
 
 This project helped me practice connecting a React frontend to an Express backend and a PostgreSQL database hosted on Render. One challenge was making sure the backend routes, frontend API service functions, and React components all used matching route paths and props. Another challenge was checking that the Events page could correctly filter events by `location_id` using data returned from the API.
-
-For the walkthrough, the video should show:
-
-* The Render dashboard with the PostgreSQL database available.
-* The database table contents, using a query such as `SELECT * FROM events;`.
-* The homepage title and interactive visual location interface.
-* Clicking each location and navigating to its unique URL.
-* Each location page displaying events from the database.
-* The Events page showing all events.
-* Filtering events by location using the dropdown.
-* A passed event appearing with different formatting.
 
 ## License
 
