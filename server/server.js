@@ -1,3 +1,5 @@
+import locationsRouter from './routes/locations.js'
+import eventsRouter from './routes/events.js'
 import express from 'express'
 import path from 'path'
 import favicon from 'serve-favicon'
@@ -23,6 +25,8 @@ else if (process.env.NODE_ENV === 'production') {
 }
 
 // specify the api path for the server to use
+app.use('/api', locationsRouter)
+app.use('/api', eventsRouter)
 
 
 if (process.env.NODE_ENV === 'production') {

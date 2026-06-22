@@ -1,62 +1,61 @@
 import React, { useState, useEffect } from 'react'
+import getPublicImagePath from '../utils/getPublicImagePath'
 import '../css/Event.css'
 
-const Event = (props) => {
+const Event = ({ event }) => {
+  const [imageError, setImageError] = useState(false)
+  const eventDateTime = new Date(`${event.date}T${event.time}`)
+  const now = new Date()
+  const hasPassed = eventDateTime < now
+  const eventImagePath = getPublicImagePath(event.image)
+  const showEventImage = eventImagePath && !imageError
 
-    const [event, setEvent] = useState([])
-    const [time, setTime] = useState([])
-    const [remaining, setRemaining] = useState([])
+  useEffect(() => {
+    setImageError(false)
+  }, [event.image])
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const eventData = await EventsAPI.getEventsById(props.id)
-                setEvent(eventData)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [])
+  return (
+    <article className={hasPassed ? 'event-information past-event' : 'event-information'}>
+      {showEventImage ? (
+        <img
+          src={eventImagePath}
+          alt={event.title}
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <div className='event-placeholder'>
+          <h3>{event.title}</h3>
+        </div>
+      )}
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const result = await dates.formatTime(event.time)
-                setTime(result)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
+      <div className='event-information-overlay'>
+        <div className='text'>
+          <h3>{event.title}</h3>
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const timeRemaining = await dates.formatRemainingTime(event.remaining)
-                setRemaining(timeRemaining)
-                dates.formatNegativeTimeRemaining(remaining, event.id)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
+          {event.description && (
+            <p>{event.description}</p>
+          )}
 
-    return (
-        <article className='event-information'>
-            <img src={event.image} />
+          <p>
+            <i className='fa-regular fa-calendar fa-bounce'></i>{' '}
+            {new Date(event.date).toLocaleDateString()}
+            <br />
+            {event.time}
+          </p>
 
-            <div className='event-information-overlay'>
-                <div className='text'>
-                    <h3>{event.title}</h3>
-                    <p><i className="fa-regular fa-calendar fa-bounce"></i> {event.date} <br /> {time}</p>
-                    <p id={`remaining-${event.id}`}>{remaining}</p>
-                </div>
-            </div>
-        </article>
-    )
+          {event.location_name && (
+            <p>
+              <strong>Location:</strong> {event.location_name}
+            </p>
+          )}
+
+          {hasPassed && (
+            <p>This event has passed.</p>
+          )}
+        </div>
+      </div>
+    </article>
+  )
 }
 
 export default Event
